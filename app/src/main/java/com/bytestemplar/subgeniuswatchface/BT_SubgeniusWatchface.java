@@ -74,16 +74,6 @@ public class BT_SubgeniusWatchface extends WatchFaceBase
 
     }
 
-    private int convert24to12( int hour )
-    {
-        hour = hour % 12;
-        if ( hour == 0 ) {
-            hour = 12;
-        }
-
-        return hour;
-    }
-
     @Override
     protected void OnShape( boolean isRound )
     {
@@ -112,4 +102,13 @@ public class BT_SubgeniusWatchface extends WatchFaceBase
         return paint;
     }
 
+    private int convert24to12( int hour )
+    {
+        hour = hour % 12;
+        if ( hour == 0 ) {
+            hour = 12;
+        }
+
+        return hour;
+    }
 }
