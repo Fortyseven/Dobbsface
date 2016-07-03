@@ -82,6 +82,8 @@ public abstract class WatchFaceBase extends CanvasWatchFaceService
 
     protected int getRealHeight() { return getResources().getDisplayMetrics().heightPixels; }
 
+    protected abstract void OnFaceTapped( int x, int y, long eventTime );
+
 
     /***********************************************************************************/
     private class Engine extends CanvasWatchFaceService.Engine
@@ -113,11 +115,7 @@ public abstract class WatchFaceBase extends CanvasWatchFaceService
         {
             super.onCreate( holder );
 
-            setWatchFaceStyle( new WatchFaceStyle.Builder( WatchFaceBase.this )
-                                       .setCardPeekMode( WatchFaceStyle.PEEK_MODE_VARIABLE )
-                                       .setBackgroundVisibility( WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE )
-                                       .setShowSystemUiTime( false )
-                                       .build() );
+            setWatchFaceStyle( new WatchFaceStyle.Builder( WatchFaceBase.this ).setCardPeekMode( WatchFaceStyle.PEEK_MODE_VARIABLE ).setBackgroundVisibility( WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE ).setAcceptsTapEvents( true ).setShowSystemUiTime( false ).build() );
 
             Resources resources = WatchFaceBase.this.getResources();
 
@@ -182,7 +180,7 @@ public abstract class WatchFaceBase extends CanvasWatchFaceService
             // Load resources that have alternate values for round watches.
             Resources resources = WatchFaceBase.this.getResources();
             boolean   isRound   = insets.isRound();
-            OnShape(isRound);
+            OnShape( isRound );
         }
 
         @Override
@@ -205,7 +203,7 @@ public abstract class WatchFaceBase extends CanvasWatchFaceService
             super.onAmbientModeChanged( inAmbientMode );
             if ( mAmbient != inAmbientMode ) {
                 mAmbient = inAmbientMode;
-                OnAmbientChange(inAmbientMode, mLowBitAmbient);
+                OnAmbientChange( inAmbientMode, mLowBitAmbient );
                 invalidate();
             }
 
@@ -260,6 +258,16 @@ public abstract class WatchFaceBase extends CanvasWatchFaceService
                 long timeMs  = System.currentTimeMillis();
                 long delayMs = INTERACTIVE_UPDATE_RATE_MS - ( timeMs % INTERACTIVE_UPDATE_RATE_MS );
                 mUpdateTimeHandler.sendEmptyMessageDelayed( MSG_UPDATE_TIME, delayMs );
+            }
+        }
+
+        @Override
+        public void onTapCommand( @TapType int tapType, int x, int y, long eventTime )
+        {
+            super.onTapCommand( tapType, x, y, eventTime );
+
+            if ( tapType == CanvasWatchFaceService.TAP_TYPE_TAP ) {
+                OnFaceTapped( x, y, eventTime );
             }
         }
     }

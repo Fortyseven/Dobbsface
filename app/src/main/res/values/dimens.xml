@@ -2,8 +2,16 @@
 <resources>
     <dimen name="digital_text_size">40dp</dimen>
     <dimen name="digital_text_size_round">45dp</dimen>
+
+    <dimen name="digital_text_size_countdown">30dp</dimen>
+    <dimen name="digital_text_size_countdown_round">35dp</dimen>
+
     <dimen name="digital_x_offset">15dp</dimen>
     <dimen name="digital_x_offset_round">25dp</dimen>
+
     <dimen name="digital_y_offset">55dp</dimen>
     <dimen name="digital_y_offset_round">70dp</dimen>
+
+    <dimen name="digital_y_offset_countdown">40dp</dimen>
+    <dimen name="digital_y_offset_countdown_round">58dp</dimen>
 </resources>
